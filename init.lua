@@ -1,6 +1,7 @@
-local opt, map = vim.opt, vim.keymap.set
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+local opt, map = vim.opt, vim.keymap.set
 
 opt.undofile = true
 opt.clipboard = "unnamedplus"
@@ -8,7 +9,7 @@ opt.ignorecase, opt.smartcase = true, true
 opt.laststatus = 0
 opt.ruler, opt.showcmd, opt.showmode = false, false, false
 opt.cursorline, opt.wrap, opt.breakindent = false, false, true
-opt.signcolumn = "auto:4-9" -- always show, exactly 4 columns (or yes:4) (max 9)
+opt.signcolumn = "auto:2-4" -- always show, exactly 4 columns (or yes:4) (max 9)
 opt.termguicolors = true
 opt.expandtab = true
 opt.tabstop, opt.shiftwidth = 4, 4
