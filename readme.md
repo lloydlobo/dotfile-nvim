@@ -7,6 +7,8 @@ a minimal, distraction-free Neovim configuration without plugins.
 ## notes
 
 - Too spartan?  ->  `alias vim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'`
+  ![NVIM_APPNAME="nvim-kickstart"](./docs/nvim-appname.gif)
+
 - Format code?  ->  `stylua init.lua`
 
 ---
