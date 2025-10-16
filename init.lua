@@ -1,50 +1,54 @@
+local api = vim.api
+local cmd = vim.cmd
+local fn = vim.fn
+local map = vim.keymap.set
+local opt = vim.opt
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-local opt, map = vim.opt, vim.keymap.set
-
-opt.undofile = true
+opt.swapfile, opt.undofile = false, true
 opt.clipboard = "unnamedplus"
-opt.ignorecase, opt.smartcase = true, true
+opt.ignorecase, opt.smartcase = true, false
 opt.laststatus = 0
-opt.ruler, opt.showcmd, opt.showmode = false, false, false
-opt.cursorline, opt.wrap, opt.breakindent = false, false, true
-opt.signcolumn = "auto:2-4" -- always show, exactly 4 columns (or yes:4) (max 9)
-opt.termguicolors = true
-opt.expandtab = true
-opt.tabstop, opt.shiftwidth = 4, 4
-opt.softtabstop = -1 -- same as opt.shiftwidth:get()
+opt.showcmd, opt.showmode = false, false
+opt.wrap, opt.breakindent, opt.showbreak = false, true, "↪ "
+opt.list, opt.listchars = true, { tab = "┊ " or "| ", trail = "·", nbsp = "␣" }
+opt.signcolumn = "auto:4-8" -- always show, exactly 4 columns (or yes:4) (max 9)
+opt.expandtab, opt.tabstop, opt.shiftwidth = true, 4, 4
+opt.softtabstop = -1 -- use shiftwidth value
 opt.scrolloff = 10
-opt.splitright, opt.splitbelow = true, true
+opt.splitright, opt.splitbelow = false, false
 opt.inccommand = "split" -- show effects of |:substitute|, |:smagic|, |:snomagic| and user commands with |:command-preview|
+opt.ruler, opt.cursorline, opt.termguicolors = true, false, true -- (optional) -- explicit defaults kept for clarity
 
-vim.cmd.syntax("off")
-vim.cmd.colorscheme(({ "default", "retrobox", "wildcharm" })[3])
-vim.api.nvim_set_hl(
-    0,
-    "Normal",
-    ({
-        { bg = "#111111", fg = "#5fd7ff" }, --[[VT100 soft cyan]]
-        { bg = "NONE", fg = "#82def7" }, --[[VT100 default cyan]]
-        { bg = "#282828", fg = "#d78700" }, --[[VT220 yellow]]
-    })[1]
-)
+cmd.syntax("on") -- (optional) -- on|off|enable # what this command actually does is to execute the command > :source $VIMRUNTIME/syntax/syntax.vim
+cmd.colorscheme("quiet") -- default|lunaperche|quiet|retrobox|unokai|wildcharm|zaibatsu
+for _, name in ipairs({ "Normal", "NormalFloat" }) do
+    api.nvim_set_hl(0, name, {
+        bg = "NONE", -- bg: NONE|#111111|#282828
+        fg = "NONE", -- fg: NONE|#5fd7ff|#82def7|#d78700|#5787af|#b5d1b5|#9ec49e|#b9d4b9|#b9d2d4
+    })
+end
 
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
 map("n", "<leader>d", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
 map("n", "<leader>m", "<cmd>marks<CR>", { desc = "List all marks/bookmarks" })
 map("n", "<leader>M", "<cmd>delmarks!<CR>", { desc = "Delete all lowercase marks/bookmarks" })
-map("n", "<leader>y", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end, { desc = "Yank file path to clipboard" })
-map("n", "<leader>c", function() -- alternatively, use `:vnew | read !cmd` and manually close the buffer
-    vim.ui.input({ prompt = "$ " }, function(cmd)
-        if not cmd or cmd == "" then return end
-        vim.cmd("noswapfile vnew | setlocal buftype=nofile bufhidden=wipe filetype=sh scrolloff=0 nowrap")
-        vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.systemlist(cmd))
+map("n", "<leader>y", function() fn.setreg("+", fn.expand("%:p")) end, { desc = "Yank file path to clipboard" })
+map("n", "<leader>c", function()
+    vim.ui.input({ prompt = "$ " }, function(input) -- alternativelly, use `:vnew | read !cmd`
+        if not input or input == "" then return end
+        cmd("noswapfile vnew | setlocal buftype=nofile bufhidden=wipe filetype=sh scrolloff=0 nowrap")
+        cmd("file [Scratch: " .. fn.escape(input, " ") .. " @ " .. os.date("%Y%m%dT%H%M%S") .. "]") -- escape command for use in filename
+        api.nvim_buf_set_lines(0, 0, -1, false, fn.systemlist(input))
     end)
 end, { desc = "Run command in scratch buffer" })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+api.nvim_create_autocmd("TextYankPost", {
+    group = api.nvim_create_augroup("highlight-yank", { clear = true }),
     callback = function() vim.highlight.on_yank() end,
-    desc = "Highlight when yanking text",
 })
+
+-- vim:filetype=lua:
+-- vim:tw=78:ts=4:sw=4:et:ft=help:norl:

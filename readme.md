@@ -75,6 +75,9 @@ you never want any default mappings, call |:mapclear| early in your config.
 - Nvim LSP client defaults |lsp-defaults|
   - K |K-lsp-default|
 
+- |g;|, |g,| |CHANGE LIST JUMPS|
+- |g?{motion}| |Rot13 encode {motion} text.|
+
  vim:tw=78:ts=8:sw=2:et:ft=help:norl:
 ```
 
