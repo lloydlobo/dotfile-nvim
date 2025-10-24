@@ -18,18 +18,16 @@ opt.signcolumn = "auto:4-8" -- always show, exactly 4 columns (or yes:4) (max 9)
 opt.expandtab, opt.tabstop, opt.shiftwidth = true, 4, 4
 opt.softtabstop = -1 -- use shiftwidth value
 opt.scrolloff = 10
-opt.splitright, opt.splitbelow = false, false
 opt.inccommand = "split" -- show effects of |:substitute|, |:smagic|, |:snomagic| and user commands with |:command-preview|
-opt.ruler, opt.cursorline, opt.termguicolors = true, false, true -- (optional) -- explicit defaults kept for clarity
 
-cmd.syntax("on") -- (optional) -- on|off|enable # what this command actually does is to execute the command > :source $VIMRUNTIME/syntax/syntax.vim
-cmd.colorscheme("quiet") -- default|lunaperche|quiet|retrobox|unokai|wildcharm|zaibatsu
-for _, name in ipairs({ "Normal", "NormalFloat" }) do
-    api.nvim_set_hl(0, name, {
-        bg = "NONE", -- bg: NONE|#111111|#282828
-        fg = "NONE", -- fg: NONE|#5fd7ff|#82def7|#d78700|#5787af|#b5d1b5|#9ec49e|#b9d4b9|#b9d2d4
-    })
-end
+opt.ruler, opt.cursorline, opt.termguicolors = true, true, true -- (optional) -- explicit defaults kept for clarity
+opt.splitright, opt.splitbelow = false, false -- (optional)
+
+cmd.syntax("on") -- (optional) -- on|off|enable # :source $VIMRUNTIME/syntax/syntax.vim
+cmd.colorscheme("brightburn_v2") -- builtins: default|lunaperche|quiet|retrobox|unokai|wildcharm|zaibatsu -- custom: brightburn|brightburn_v1|brightburn_v2
+for _, name in ipairs({ "Normal", "NormalFloat", "SignColumn" }) do
+    _ = true and api.nvim_set_hl(0, name, { bg = "NONE", fg = "NONE" }) -- bg: NONE|#111111|#282828
+end -- fg: NONE|#5fd7ff|#82def7|#d78700|#5787af|#b5d1b5|#9ec49e|#b9d4b9|#b9d2d4
 
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
 map("n", "<leader>d", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
@@ -50,5 +48,6 @@ api.nvim_create_autocmd("TextYankPost", {
     callback = function() vim.highlight.on_yank() end,
 })
 
+-- see `:h modeline`
 -- vim:filetype=lua:
 -- vim:tw=78:ts=4:sw=4:et:ft=help:norl:
