@@ -24,7 +24,7 @@ a minimal, distraction-free Neovim configuration without plugins.
 | `<leader>y` | Yank file path to clipboard |
 | `<leader>c` | Run shell command in scratch buffer |
 
-### Marks (Built-in Bookmarks)
+### marks (Built-in Bookmarks)
 
 - `m{a-z}` — Set local mark
 - `m{A-Z}` — Set global mark (across files)
@@ -85,10 +85,16 @@ you never want any default mappings, call |:mapclear| early in your config.
 
 ## references
 
-- [why I got rid of all my neovim plugins — yobibyte](https://yobibyte.github.io/vim.html)
+- [why I got rid of all my neovim plugins — yobibyte]
+    - [yobibyte/yobitools/dotfiles/init.lua]
+    - [wdomitrz/kitty_gruvbox_theme]
+- [raster CRT Typography — masswerk]
+- [devhints.io/vim]
 
-    - [yobibyte/yobitools/dotfiles/init.lua](https://github.com/yobibyte/yobitools/blob/main/dotfiles/init.lua)
-    - [wdomitrz/kitty_gruvbox_theme](https://raw.githubusercontent.com/wdomitrz/kitty_gruvbox_theme/refs/heads/master/gruvbox_light.conf)
+---
 
-- [Raster CRT Typography — masswerk](https://www.masswerk.at/nowgobang/2019/dec-crt-typography)
-
+[why I got rid of all my neovim plugins — yobibyte]: https://yobibyte.github.io/vim.html
+[yobibyte/yobitools/dotfiles/init.lua]: https://github.com/yobibyte/yobitools/blob/main/dotfiles/init.lua
+[wdomitrz/kitty_gruvbox_theme]: https://raw.githubusercontent.com/wdomitrz/kitty_gruvbox_theme/refs/heads/master/gruvbox_light.conf
+[Raster CRT Typography — masswerk]: https://www.masswerk.at/nowgobang/2019/dec-crt-typography
+[devhints.io/vim]: https://devhints.io/vim
