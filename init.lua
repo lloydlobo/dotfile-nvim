@@ -19,9 +19,9 @@ opt.expandtab, opt.tabstop, opt.shiftwidth = true, 4, 4
 opt.softtabstop = -1 -- use shiftwidth value
 opt.scrolloff = 10
 opt.inccommand = "split" -- show effects of |:substitute|, |:smagic|, |:snomagic| and user commands with |:command-preview|
+opt.splitright, opt.splitbelow = true, true
 
 opt.ruler, opt.cursorline, opt.termguicolors = true, true, true -- (optional) -- explicit defaults kept for clarity
-opt.splitright, opt.splitbelow = false, false -- (optional)
 
 cmd.syntax("on") -- (optional) -- on|off|enable # :source $VIMRUNTIME/syntax/syntax.vim
 cmd.colorscheme("brightburn_v2") -- builtins: default|lunaperche|quiet|retrobox|unokai|wildcharm|zaibatsu -- custom: brightburn|brightburn_v1|brightburn_v2
@@ -43,10 +43,33 @@ map("n", "<leader>c", function()
     end)
 end, { desc = "Run command in scratch buffer" })
 
+-- NOTE: (Always put your :autocmds inside an :augroup, since then they won't be duplicated whenever you :source your vimrc again.)
+-- Source: https://vi.stackexchange.com/questions/20906/is-there-a-way-to-make-some-modeline-that-applies-to-all-files-in-a-directory-r
 api.nvim_create_autocmd("TextYankPost", {
     group = api.nvim_create_augroup("highlight-yank", { clear = true }),
     callback = function() vim.highlight.on_yank() end,
 })
+
+if true then
+    vim.api.nvim_create_augroup("FSharpMessageGroup", { clear = true })
+    vim.api.nvim_create_autocmd("BufRead", {
+        group = "FSharpMessageGroup",
+        pattern = "*.fs,*.fsx,*.fsscript",
+        callback = function() cmd("setlocal filetype=fsharp | setlocal syntax=gleam") end, -- ——— or ——— vim.bo.filetype = "fsharp"
+    })
+end
+
+-- TODO: Delete this...
+if false then
+    -- This will instruct Vim to read a vimrc file (.vimrc or _vimrc) from your current directory. So you could use this to set a per-project vimrc.
+    -- There are many drawbacks with this solution, such as still having to solve subdirectories, having to be inside the project tree when you start Vim and also security concerns about sourcing .vimrc files from the tree (you're setting 'exrc' globally, so Vim will try to open any .vimrc you happen to stumble upon.)
+    -- This is a terrible idea. Don't go with this one!
+    -- Source: https://vi.stackexchange.com/questions/20906/is-there-a-way-to-make-some-modeline-that-applies-to-all-files-in-a-directory-r
+    cmd([[
+    set exrc
+    set secure
+    ]])
+end
 
 -- see `:h modeline`
 -- vim:filetype=lua:
