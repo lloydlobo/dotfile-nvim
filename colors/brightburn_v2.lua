@@ -3,6 +3,20 @@
 -- License: GNU GPL v3 (http://www.gnu.org/licenses/gpl.html)
 
 -- Brightburn theme for Neovim (converted to Lua)
+-- • `#ffa263` — Orange accent (used for `Boolean`, `Structure`, etc.)
+-- • `#dca3a3` — Light red-pink (used for `Character`, `SpecialChar`, etc.)
+-- • `#333333` — Dark gray (used for `Comment`, `Float`, `Folded`, etc.)
+-- • `#8faf9f` — Teal (used for `Cursor`, `Search`, etc.)
+-- • `#ffd787` — Light yellow (used for `Keyword`, `Function`, etc.)
+-- • `#ffcfaf` — Pale orange (used for `Define`, `PreProc`, `Macro`, etc.)
+-- • `#709080` — Grayish green (used for `DiffAdd`)
+-- • `#93b3a3` — Muted green (used for `FoldColumn`)
+-- • `#c0bed1` — Light gray (used for `Float`, `StatusLine`)
+-- • `#e37170` — Light red (used for `Error`)
+-- • `#dcdccc` — Off-white (used for `Normal`, `Operator`, `LineNr`, etc.)
+-- • `#75b5aa` — Tealish-green (used for `SpellRare`, `Terminal`)
+-- • `#6a9fb5` — Light blue (used for `Directory`, `DiffChange`, etc.)
+-- • `#ffdf9f` — Yellowish (used for `MatchParen`)
 
 local cmd = vim.cmd
 local set_hl = vim.api.nvim_set_hl
@@ -20,7 +34,7 @@ local function hl(group, opts) set_hl(0, group, opts) end
 
 hl("Boolean", { fg = "#ffa263" })
 hl("Character", { fg = "#dca3a3", bold = true })
-hl("Comment", { fg = "#333333" or "#999999" or "#acd2ac", bold = true })
+hl("Comment", { fg = ({ "#2e3330", "#333333", "#41363c", "#999999", "#acd2ac" })[1], bold = true })
 hl("Conditional", { fg = "#ffd787", bold = true })
 hl("Constant", { fg = "#ffd787", bold = true })
 hl("Cursor", { fg = "#000d18", bg = "#8faf9f", bold = true })
