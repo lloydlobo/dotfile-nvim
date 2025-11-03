@@ -43,34 +43,20 @@ map("n", "<leader>c", function()
     end)
 end, { desc = "Run command in scratch buffer" })
 
--- NOTE: (Always put your :autocmds inside an :augroup, since then they won't be duplicated whenever you :source your vimrc again.)
--- Source: https://vi.stackexchange.com/questions/20906/is-there-a-way-to-make-some-modeline-that-applies-to-all-files-in-a-directory-r
-api.nvim_create_autocmd("TextYankPost", {
-    group = api.nvim_create_augroup("highlight-yank", { clear = true }),
-    callback = function() vim.highlight.on_yank() end,
+api.nvim_create_autocmd(
+    "TextYankPost",
+    { -- NOTE: (Always put your :autocmds inside an :augroup, since then they won't be duplicated whenever you :source your vimrc again.) Source: https://vi.stackexchange.com/questions/20906/is-there-a-way-to-make-some-modeline-that-applies-to-all-files-in-a-directory-r
+        group = api.nvim_create_augroup("highlight-yank", { clear = true }),
+        callback = function() vim.highlight.on_yank() end,
+    }
+)
+
+local f_sharp_message_group = api.nvim_create_augroup("FSharpMessageGroup", { clear = true })
+api.nvim_create_autocmd("BufRead", {
+    group = f_sharp_message_group,
+    pattern = { "*.fs", "*.fsx", "*.fsscript" },
+    callback = function() vim.cmd("setlocal filetype=fsharp syntax=gleam commentstring=//\\ %s") end,
 })
-
-if true then
-    vim.api.nvim_create_augroup("FSharpMessageGroup", { clear = true })
-    vim.api.nvim_create_autocmd("BufRead", {
-        group = "FSharpMessageGroup",
-        pattern = "*.fs,*.fsx,*.fsscript",
-        callback = function() cmd("setlocal filetype=fsharp | setlocal syntax=gleam") end, -- ——— or ——— vim.bo.filetype = "fsharp"
-    })
-end
-
--- TODO: Delete this...
-if false then
-    -- This will instruct Vim to read a vimrc file (.vimrc or _vimrc) from your current directory. So you could use this to set a per-project vimrc.
-    -- There are many drawbacks with this solution, such as still having to solve subdirectories, having to be inside the project tree when you start Vim and also security concerns about sourcing .vimrc files from the tree (you're setting 'exrc' globally, so Vim will try to open any .vimrc you happen to stumble upon.)
-    -- This is a terrible idea. Don't go with this one!
-    -- Source: https://vi.stackexchange.com/questions/20906/is-there-a-way-to-make-some-modeline-that-applies-to-all-files-in-a-directory-r
-    cmd([[
-    set exrc
-    set secure
-    ]])
-end
-
 -- see `:h modeline`
 -- vim:filetype=lua:
 -- vim:tw=78:ts=4:sw=4:et:ft=help:norl:
