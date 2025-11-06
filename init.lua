@@ -1,8 +1,9 @@
+local opt = vim.opt
+
 local api = vim.api
 local cmd = vim.cmd
 local fn = vim.fn
 local map = vim.keymap.set
-local opt = vim.opt
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -55,8 +56,12 @@ local f_sharp_message_group = api.nvim_create_augroup("FSharpMessageGroup", { cl
 api.nvim_create_autocmd("BufRead", {
     group = f_sharp_message_group,
     pattern = { "*.fs", "*.fsx", "*.fsscript" },
-    callback = function() vim.cmd("setlocal filetype=fsharp syntax=gleam commentstring=//\\ %s") end,
+    callback = function() cmd("setlocal filetype=fsharp syntax=gleam commentstring=//\\ %s") end,
 })
+
+local format = require("custom.format")
+format.setup()
+
 -- see `:h modeline`
 -- vim:filetype=lua:
 -- vim:tw=78:ts=4:sw=4:et:ft=help:norl:
