@@ -53,12 +53,12 @@
 
 ### todo | from kickstart
 
-| `vib`, `viB`, `viq`, `vit`   | Select inside `()`, `{}`, `""`, `<tags>`.                                                       |
-| `<leader>/`                  | Fuzzy search in current buffer.                                                                 |
-| `F8`                         | Toggle debugger (DAP) view.                                                                     |
+| `vib`, `viB`, `viq`, `vit` | Select inside `()`, `{}`, `""`, `<tags>`. |
+| `<leader>/` | Fuzzy search in current buffer. |
+| `F8` | Toggle debugger (DAP) view. |
 
 ---
-  			
+
 ## Digraphs & Special Characters
 
 | Input            | Output    | Description          |
@@ -67,7 +67,7 @@
 | `'a' <BS> '>'`   | `â` (226) | A with circumflex.   |
 | `CTRL-K '-' '-'` | `­` (173) | Soft hyphen.         |
 | `i C-k hh`       | `─`       | Horizontal line.     |
-| `CTRL-K 'O' 'K'` | `✓`       | Checkmark.         |
+| `CTRL-K 'O' 'K'` | `✓`       | Checkmark.           |
 
 ---
 
@@ -178,7 +178,7 @@ man 5 passwd
 
 ---
 
-<!-- 
+<!--
 vim:filetype=markdown:
 vim:tw=78:ts=4:sw=4:et:ft=help:norl:
 -->

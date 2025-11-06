@@ -6,22 +6,22 @@ a minimal, distraction-free Neovim configuration without plugins.
 
 ## notes
 
-- Too spartan?  ->  `alias vim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'`
+- Too spartan? -> `alias vim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'`
   ![NVIM_APPNAME="nvim-kickstart"](./docs/nvim-appname.gif)
 
-- Format code?  ->  `stylua init.lua`
+- Format code? -> `stylua init.lua`
 
 ---
 
 ## keybindings
 
-| Key | Action |
-|-----|--------|
-| `<Esc>` | Clear search highlighting |
-| `<leader>d` | Delete buffer |
-| `<leader>m` | List marks/bookmarks |
-| `<leader>M` | Delete all marks |
-| `<leader>y` | Yank file path to clipboard |
+| Key         | Action                              |
+| ----------- | ----------------------------------- |
+| `<Esc>`     | Clear search highlighting           |
+| `<leader>d` | Delete buffer                       |
+| `<leader>m` | List marks/bookmarks                |
+| `<leader>M` | Delete all marks                    |
+| `<leader>y` | Yank file path to clipboard         |
 | `<leader>c` | Run shell command in scratch buffer |
 
 ### marks (Built-in Bookmarks)
@@ -86,8 +86,8 @@ you never want any default mappings, call |:mapclear| early in your config.
 ## references
 
 - [why I got rid of all my neovim plugins — yobibyte]
-    - [yobibyte/yobitools/dotfiles/init.lua]
-    - [wdomitrz/kitty_gruvbox_theme]
+  - [yobibyte/yobitools/dotfiles/init.lua]
+  - [wdomitrz/kitty_gruvbox_theme]
 - [raster CRT Typography — masswerk]
 - [devhints.io/vim]
 
