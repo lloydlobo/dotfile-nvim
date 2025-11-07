@@ -20,11 +20,12 @@ opt.inccommand = "split"
 opt.splitright, opt.splitbelow = true, true
 opt.ruler, opt.cursorline, opt.termguicolors = true, true, true -- (optional) -- explicit defaults kept for clarity
 cmd.syntax("on") -- (optional) -- on|off|enable # :source $VIMRUNTIME/syntax/syntax.vim
-cmd.colorscheme("brightburn_v2") -- builtins: default|lunaperche|quiet|retrobox|unokai|wildcharm|zaibatsu -- custom: brightburn|brightburn_v1|brightburn_v2
+cmd.colorscheme(({ "brightburn_v2", "quiet" })[1]) -- builtins: default|lunaperche|quiet|retrobox|unokai|wildcharm|zaibatsu -- custom: brightburn|brightburn_v1|brightburn_v2
 for _, name in ipairs({ "Normal", "NormalFloat", "SignColumn" }) do
     api.nvim_set_hl(0, name, { bg = "NONE", fg = "NONE" }) -- bg: NONE|#111111|#282828 fg: NONE|#5fd7ff|#82def7|#d78700|#5787af|#b5d1b5|#9ec49e|#b9d4b9|#b9d2d4
 end
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
+map({ "n", "i", "v" }, "<C-s>", function() cmd("write") end, { desc = "Save file", noremap = true })
 map("n", "<leader>d", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
 map("n", "<leader>m", "<cmd>marks<CR>", { desc = "List all marks/bookmarks" })
 map("n", "<leader>M", "<cmd>delmarks!<CR>", { desc = "Delete all lowercase marks/bookmarks" })
@@ -40,7 +41,7 @@ end, { desc = "Run command in scratch buffer" })
 api.nvim_create_autocmd("TextYankPost", {
     group = api.nvim_create_augroup("highlight-yank", { clear = true }),
     callback = function() vim.highlight.on_yank() end,
-})
+}) -- NOTE: Always put your :autocmds inside an :augroup, since then they won't be duplicated whenever you :source your vimrc again. Source: https://vi.stackexchange.com/questions/20906
 api.nvim_create_autocmd("BufRead", {
     group = api.nvim_create_augroup("FSharpMessageGroup", { clear = true }),
     pattern = { "*.fs", "*.fsx", "*.fsscript" },
